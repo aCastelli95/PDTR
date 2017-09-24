@@ -8,7 +8,7 @@
 
 
 void
-servidorcf_prog_1(char *host,char *cadena)
+servidorcf_prog_1(char *host, char *cadena)
 {
 	CLIENT *clnt;
 	int  *result_1;
@@ -23,7 +23,7 @@ servidorcf_prog_1(char *host,char *cadena)
 		exit (1);
 	}
 #endif	/* DEBUG */
-	ecritura_1_arg.nombreA = cadena;
+	lectura_1_arg.nombreA = cadena;
 	result_1 = lectura_1(&lectura_1_arg, clnt);
 	if (result_1 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
@@ -45,7 +45,6 @@ main (int argc, char *argv[])
 
 	if (argc < 3) {
 		printf ("usage: %s server_host\n", argv[0]);
-		
 		exit (1);
 	}
 	host = argv[1];

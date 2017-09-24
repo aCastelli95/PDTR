@@ -24,13 +24,7 @@ int *
 ecritura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 {
 	static int  result;
-	printf("Nombre del archivo: %s\n",argp->nombreA );
-	printf("Posicion del Archivo: %d\n", argp->posicionA);
-	printf("Cantidad de Bytes a leer: %d\n",argp->cantLeerA);
-  	printf("Buffer a escribir : %s\n",argp->bufferEcritura);
-	/*
-		Ejecucion de la Escritura
-	*/
+
 	result=1;
 	return &result;
 }
