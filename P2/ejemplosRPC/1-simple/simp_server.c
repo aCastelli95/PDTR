@@ -5,6 +5,7 @@
  */
 
 #include "simp.h"
+#include <unistd.h>
 #define foo 127
 
 
@@ -12,8 +13,14 @@ int *
 add_1_svc(operands *argp, struct svc_req *rqstp)
 {
 	static int result;
+	// lo que se utiliza para romper el servidor es el siguiente codigo:	
+	//sleep(1000000);
+	// Para verificarlo, el servidor le indica por terminal al cliente(del lado del cliente)
+	// que este perdio su tiempo de conexion. 
 	printf("add(%d,%d) suma de valores \n",argp->x, argp->y);
 	result= argp->x + argp->y ;
+	// LO otro encontrado es desconectar todo del lado del servidor, entonces en el cliente se 		// puede observar dichos errores.	
+	exit(0);
 	return &result;
 }
 

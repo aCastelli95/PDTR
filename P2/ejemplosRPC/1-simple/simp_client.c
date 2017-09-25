@@ -6,7 +6,7 @@
 
 #include "simp.h"
 #define foo 127
-
+#include <unistd.h>
 
 void
 simp_prog_1(char *host, int valX, int valY)
@@ -19,16 +19,21 @@ simp_prog_1(char *host, int valX, int valY)
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, SIMP_PROG, SIMP_VERSION, "udp");
+	
+
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
-//lectura de los valores que vienen de parametro par la terminal.
-  add_1_arg.x=valX;
+	//lectura de los valores que vienen de parametro par la terminal.
+  	add_1_arg.x=valX;
 	add_1_arg.y=valY;
 	// se realizan las cuentas segun los parametros que se tengan
+	
+	
 	result_1 = add_1(&add_1_arg, clnt);
+		
 	if (result_1 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}else
@@ -41,7 +46,7 @@ simp_prog_1(char *host, int valX, int valY)
 	}else{
 		printf("Resultado de la suma = %d",*result_2);
 	}
-
+	
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
@@ -56,8 +61,9 @@ main (int argc, char *argv[])
 		printf ("usage: %s server_host ValorX ValorY\n", argv[0]);
 		exit (1);
 	}
-	host = argv[1];
+	host = argv[1];	
+	// SUponiendo que todo funciona, colocando algun sleep o exit no estaria sucediendo nada.
 	simp_prog_1 (host, atoi(argv[2]), atoi(argv[3]));
-
+	
 exit (0);
 }
