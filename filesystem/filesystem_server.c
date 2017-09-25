@@ -11,24 +11,24 @@ lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 {
 	static int  result;
 	FILE *archivo;
-	char buffer[17];
+	char * buffer;
 	archivo = fopen(argp->nombreA,"r");
-	// COn respecto al buffer, fijarse en el tamaño,se tiene que armar alguna estructura para que el argp->cantLeerA sea igual al tamaño del char *buffer....y ver la parte de trasmitir por partes para archivo grandes.
+	// Con respecto al buffer, fijarse en el tamaño,se tiene que armar alguna estructura para que el argp->cantLeerA sea igual al tamaño del char *buffer....y ver la parte de trasmitir por partes para archivo grandes.
+	printf("Nombre del archivo: %s\n",argp->nombreA );
+	printf("Posicion del Archivo: %d\n", argp->posicionA);
+	printf("Cantidad de Bytes a leer: %d\n",argp->cantLeerA);
+  	printf("Buffer a escribir : %s\n",argp->bufferEscritura);	
 	if(archivo == NULL){
-		printf("no existe el archivo\n");
+		printf("El archivo solicitado no existe.\n");
 	}else{
-		printf("se abrio correctamente\n");
+		printf("El archivo se abrio correctamente\n");
 		// Lectura del archivo pepe
+		buffer = (char *)calloc(argp->cantLeerA, sizeof(unsigned char));		
 		fread(buffer,sizeof(unsigned char),argp->cantLeerA,archivo);
 		printf("%s \n",buffer);
 		fclose(archivo);
 	}
-
-	//COsaas a imprimir utiles
-	printf("Nombre del archivo: %s\n",argp->nombreA );
-	printf("Posicion del Archivo: %d\n", argp->posicionA);
-	printf("Cantidad de Bytes a leer: %d\n",argp->cantLeerA);
-  	printf("Buffer a escribir : %s\n",argp->bufferEscritura);
+	//Cosas a imprimir utiles
 	result = 1;
 	return &result;
 }
@@ -37,7 +37,7 @@ int *
 escritura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 {
 	static int  result;
-	FILE *archivo;
+	/*FILE *archivo;
 	archivo = fopen(argp->nombreA,"a");
 	if(archivo == NULL){
 		printf("no existe el archivo\n");
@@ -47,7 +47,7 @@ escritura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 		fwrite(argp->bufferEscritura,sizeof(unsigned char),argp->cantLeerA,archivo);
 		printf("%s \n",argp->bufferEscritura);
 		fclose(archivo);
-	}
+	}*/
 	/*printf("Nombre del archivo: %s\n",argp->nombreA );
 	printf("Posicion del Archivo: %d\n", argp->posicionA);
 	printf("Cantidad de Bytes a leer: %d\n",argp->cantLeerA);
