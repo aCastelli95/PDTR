@@ -10,7 +10,7 @@ int *
 lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 {
 	static int  result;
-	FILE *archivo;
+	/*FILE *archivo;
 	char * buffer;
 	archivo = fopen(argp->nombreA,"r");
 	// Con respecto al buffer, fijarse en el tamaño,se tiene que armar alguna estructura para que el argp->cantLeerA sea igual al tamaño del char *buffer....y ver la parte de trasmitir por partes para archivo grandes.
@@ -27,7 +27,7 @@ lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 		fread(buffer,sizeof(unsigned char),argp->cantLeerA,archivo);
 		printf("%s \n",buffer);
 		fclose(archivo);
-	}
+	}*/
 	//Cosas a imprimir utiles
 	result = 1;
 	return &result;
@@ -37,21 +37,21 @@ int *
 escritura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 {
 	static int  result;
-	/*FILE *archivo;
+	FILE *archivo;
 	archivo = fopen(argp->nombreA,"a");
 	if(archivo == NULL){
 		printf("no existe el archivo\n");
 	}else{
 		printf("se abrio correctamente\n");
 		//Escritura de algo
-		fwrite(argp->bufferEscritura,sizeof(unsigned char),argp->cantLeerA,archivo);
+		fwrite(argp->bufferEscritura,sizeof(unsigned char),strnlen(argp->bufferEscritura,255),archivo);
 		printf("%s \n",argp->bufferEscritura);
 		fclose(archivo);
-	}*/
-	/*printf("Nombre del archivo: %s\n",argp->nombreA );
+	}
+	printf("Nombre del archivo Escritura o creado: %s\n",argp->nombreA );
 	printf("Posicion del Archivo: %d\n", argp->posicionA);
 	printf("Cantidad de Bytes a leer: %d\n",argp->cantLeerA);
-  	printf("Buffer a escribir : %s\n",argp->bufferEscritura);*/	
+  	printf("Buffer a escribir : %s\n",argp->bufferEscritura);
 	result = 1;
 	return &result;
 }
