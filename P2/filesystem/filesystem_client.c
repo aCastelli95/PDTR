@@ -27,6 +27,10 @@ servidorcf_prog_1(char *host, char *cadena, int val1, int val2,char *cadBuffer)
 	result_1 = lectura_1(&lectura_1_arg, clnt);
 	if (result_1 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
+	}else{
+		// va la opcion en caso de que se tenga un 1 en el resultado
+		
+
 	}
 	
 	escritura_1_arg.nombreA = cadena;

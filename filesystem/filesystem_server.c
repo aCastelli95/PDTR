@@ -10,24 +10,33 @@ int *
 lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 {
 	static int  result;
-	/*FILE *archivo;
+	FILE *archivo;
 	char * buffer;
 	archivo = fopen(argp->nombreA,"r");
 	// Con respecto al buffer, fijarse en el tamaño,se tiene que armar alguna estructura para que el argp->cantLeerA sea igual al tamaño del char *buffer....y ver la parte de trasmitir por partes para archivo grandes.
-	printf("Nombre del archivo: %s\n",argp->nombreA );
-	printf("Posicion del Archivo: %d\n", argp->posicionA);
-	printf("Cantidad de Bytes a leer: %d\n",argp->cantLeerA);
-  	printf("Buffer a escribir : %s\n",argp->bufferEscritura);	
+	printf("Nombre del archivo Lectura: %s\n",argp->nombreA );
+	//printf("Buffer a escribir : %s\n",argp->bufferEscritura);	
 	if(archivo == NULL){
 		printf("El archivo solicitado no existe.\n");
 	}else{
 		printf("El archivo se abrio correctamente\n");
+		
 		// Lectura del archivo pepe
 		buffer = (char *)calloc(argp->cantLeerA, sizeof(unsigned char));		
+		
+		//posicionamiento del puntero
+		int posicion = fseek(archivo,argp->posicionA, SEEK_SET) // ARCHIVO, POSICION, FORMATO DE SET
+		printf("Posicion del Archivo: %d\n", posicion);
+		
+		//lectura del archivo
 		fread(buffer,sizeof(unsigned char),argp->cantLeerA,archivo);
 		printf("%s \n",buffer);
+		
+		
+		printf("Cantidad de Bytes leidos: %d\n",(posicion - ftell(archivo)));
+				
 		fclose(archivo);
-	}*/
+	}
 	//Cosas a imprimir utiles
 	result = 1;
 	return &result;
