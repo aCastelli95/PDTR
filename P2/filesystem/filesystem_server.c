@@ -17,8 +17,7 @@ lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 	char * buffer;
 	archivo = fopen(argp->nombreA,"r");
 	// Con respecto al buffer, fijarse en el tamaño,se tiene que armar alguna estructura para que el argp->cantLeerA sea igual al tamaño del char *buffer....y ver la parte de trasmitir por partes para archivo grandes.
-	printf("Nombre del archivo Lectura: %s\n",argp->nombreA );
-	//printf("Buffer a escribir : %s\n",argp->bufferEscritura);	
+	printf("Nombre del archivo Lectura: %s\n",argp->nombreA );	
 	if(archivo == NULL){
 		printf("El archivo solicitado no existe.\n");
 	}else{
@@ -30,6 +29,7 @@ lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 		//posicionamiento del puntero
 		fseek(archivo,argp->posicionA, SEEK_SET); // ARCHIVO, POSICION, FORMATO DE SET
 		printf("Posicion del Archivo: %d\n",argp->posicionA );
+		
 		//lectura del archivo
 		fread(buffer,sizeof(unsigned char),argp->cantLeerA,archivo);
 		printf("%s \n",buffer);
@@ -40,6 +40,8 @@ lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 		printf("Cantidad de Bytes leidos: %d\n",resultado_posicion);
 				
 		fclose(archivo);
+		printf("*******************************************************************\n");
+
 	}
 	//Cosas a imprimir utiles
 	result = 1;
@@ -49,37 +51,50 @@ lectura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 int *
 escritura_1_svc(variablesCompartidas *argp, struct svc_req *rqstp)
 {
+	/*
+		verifico si tengo cosas para escribir en el archivo
+			si es asi las escribo 
+			reposicion del puntero a cero
+		
+		abrimos el archivop a copiar server 
+		abrimos el archivo a copiar Local
+		copiamos en los dos
+		mostramos informacion de ESCRITURA segun lo que pida
+	*/
 	static int  result;
 	char c;
 	FILE *archivo;
-	FILE *archivo_copiado;
+	FILE *archivo_copiado_servidor;
+	FILE *archivo_copiado_local;
 	//archivo = fopen(argp->nombreA,"a"); fijarce lo que dice el inciso b....lo que tendriamos que hace es ua copia 
 	//y escribir sobre esa copia
 	archivo = fopen(argp->nombreA,"rw");
-	archivo_copiado = fopen("Server_texto.txt","wt");
-	
+	archivo_copiado_servidor = fopen("server_texto.txt","wt");
+	archivo_copiado_local = fopen("local_texto.txt","wt");
+	// verifico si existe el archivo, sino no hago nada masque msotrar que no existe
 	if(archivo == NULL){
 		printf("no existe el archivo\n");
 	}else{
-		printf("se abrio correctamente\n");
+		printf("Nombre del archivo Escritura o creado: %s\n",argp->nombreA );
 		//Escritura de algo con salto de linea al final, sino la proxima escritura se hac al lado
 		fwrite(argp->bufferEscritura,sizeof(unsigned char),strnlen(argp->bufferEscritura,255),archivo);
 		fwrite("\n",sizeof(unsigned char),1,archivo);
-		
-		printf("%s \n",argp->bufferEscritura);
+		printf("Lo que se copio al final del archivo:'%s'\n",argp->bufferEscritura);
+		//printf("Cantidad de Bytes a leer: %d\n",strnlen(argp->bufferEscritura,255));	
+		// reubicamos el puntero
+		fseek(archivo,0,SEEK_SET);
+		// copia del archivo para el inciso b
+		while((c=fgetc(archivo))!=EOF)
+		{
+			fputc(c,archivo_copiado_servidor);
+			fputc(c,archivo_copiado_local);
+		}
+		printf("Copias con exito\n");
 		fclose(archivo);
-		fclose(archivo_copiado);
+		fclose(archivo_copiado_servidor);
+		fclose(archivo_copiado_local);
+		printf("*******************************************************************\n");
 	}
-	// copia del archivo para el inciso b
-	while((c=fgetc(archivo))!=EOF)
-	{
-		fputc(c,archivo_copiado);
-	}
-	
-	printf("Nombre del archivo Escritura o creado: %s\n",argp->nombreA );
-	printf("Posicion del Archivo: %d\n", argp->posicionA);
-	printf("Cantidad de Bytes a leer: %d\n",argp->cantLeerA);
-  	printf("Buffer a escribir : %s\n",argp->bufferEscritura);
 	result = 1;
 	return &result;
 }
