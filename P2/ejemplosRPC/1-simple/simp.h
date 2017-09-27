@@ -13,8 +13,6 @@
 extern "C" {
 #endif
 
-#define foo 127
-
 struct operands {
 	int x;
 	int y;

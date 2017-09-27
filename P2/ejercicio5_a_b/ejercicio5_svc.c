@@ -3,7 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include "simp.h"
+#include "ejercicio5.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <rpc/pmap_clnt.h>
@@ -17,11 +17,10 @@
 #endif
 
 static void
-simp_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
+servidorcf_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		operands add_1_arg;
-		operands sub_1_arg;
+		int fill;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -32,16 +31,10 @@ simp_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case ADD:
-		_xdr_argument = (xdrproc_t) xdr_operands;
-		_xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) add_1_svc;
-		break;
-
-	case SUB:
-		_xdr_argument = (xdrproc_t) xdr_operands;
-		_xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) sub_1_svc;
+	case TIEMPO:
+		_xdr_argument = (xdrproc_t) xdr_void;
+		_xdr_result = (xdrproc_t) xdr_double;
+		local = (char *(*)(char *, struct svc_req *)) tiempo_1_svc;
 		break;
 
 	default:
@@ -69,15 +62,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (SIMP_PROG, SIMP_VERSION);
+	pmap_unset (SERVIDORCF_PROG, SIMP_VERSION);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, SIMP_PROG, SIMP_VERSION, simp_prog_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (SIMP_PROG, SIMP_VERSION, udp).");
+	if (!svc_register(transp, SERVIDORCF_PROG, SIMP_VERSION, servidorcf_prog_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (SERVIDORCF_PROG, SIMP_VERSION, udp).");
 		exit(1);
 	}
 
@@ -86,8 +79,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, SIMP_PROG, SIMP_VERSION, simp_prog_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (SIMP_PROG, SIMP_VERSION, tcp).");
+	if (!svc_register(transp, SERVIDORCF_PROG, SIMP_VERSION, servidorcf_prog_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (SERVIDORCF_PROG, SIMP_VERSION, tcp).");
 		exit(1);
 	}
 

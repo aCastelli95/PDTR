@@ -6,7 +6,9 @@
 
 #include "simp.h"
 #include <unistd.h>
+
 #define foo 127
+
 
 
 int *
@@ -20,7 +22,8 @@ add_1_svc(operands *argp, struct svc_req *rqstp)
 	printf("add(%d,%d) suma de valores \n",argp->x, argp->y);
 	result= argp->x + argp->y ;
 	// LO otro encontrado es desconectar todo del lado del servidor, entonces en el cliente se 		// puede observar dichos errores.	
-	exit(0);
+	printf("TiempoEspe");
+	
 	return &result;
 }
 

@@ -18,8 +18,7 @@ simp_prog_1(char *host, int valX, int valY)
 	operands  sub_1_arg;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, SIMP_PROG, SIMP_VERSION, "udp");
-	
+	clnt = clnt_create (host, SIMP_PROG, SIMP_VERSION, "udp");	
 
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);

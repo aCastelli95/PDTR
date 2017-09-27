@@ -3,18 +3,18 @@
 
 # Parameters
 
-CLIENT = filesystem_client
-SERVER = filesystem_server
+CLIENT = ejercicio5_client
+SERVER = ejercicio5_server
 
 SOURCES_CLNT.c = 
 SOURCES_CLNT.h = 
 SOURCES_SVC.c = 
 SOURCES_SVC.h = 
-SOURCES.x = filesystem.x
+SOURCES.x = ejercicio5.x
 
-TARGETS_SVC.c = filesystem_svc.c filesystem_server.c filesystem_xdr.c 
-TARGETS_CLNT.c = filesystem_clnt.c filesystem_client.c filesystem_xdr.c 
-TARGETS = filesystem.h filesystem_xdr.c filesystem_clnt.c filesystem_svc.c filesystem_client.c filesystem_server.c
+TARGETS_SVC.c = ejercicio5_svc.c ejercicio5_server.c   
+TARGETS_CLNT.c = ejercicio5_clnt.c ejercicio5_client.c   
+TARGETS = ejercicio5.h   ejercicio5_clnt.c ejercicio5_svc.c ejercicio5_client.c ejercicio5_server.c
 
 OBJECTS_CLNT = $(SOURCES_CLNT.c:%.c=%.o) $(TARGETS_CLNT.c:%.c=%.o)
 OBJECTS_SVC = $(SOURCES_SVC.c:%.c=%.o) $(TARGETS_SVC.c:%.c=%.o)

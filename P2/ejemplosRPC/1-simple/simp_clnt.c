@@ -5,7 +5,6 @@
 
 #include <memory.h> /* for memset */
 #include "simp.h"
-#define foo 127
 
 /* Default timeout can be changed using clnt_control() */
 static struct timeval TIMEOUT = { 25, 0 };

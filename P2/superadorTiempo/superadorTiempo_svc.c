@@ -3,7 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include "filesystem.h"
+#include "superadorTiempo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <rpc/pmap_clnt.h>
@@ -20,8 +20,7 @@ static void
 servidorcf_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		variablesCompartidas lectura_1_arg;
-		variablesCompartidas escritura_1_arg;
+		int fill;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -32,16 +31,10 @@ servidorcf_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case LECTURA:
-		_xdr_argument = (xdrproc_t) xdr_variablesCompartidas;
-		_xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) lectura_1_svc;
-		break;
-
-	case ESCRITURA:
-		_xdr_argument = (xdrproc_t) xdr_variablesCompartidas;
-		_xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) escritura_1_svc;
+	case TIEMPO:
+		_xdr_argument = (xdrproc_t) xdr_void;
+		_xdr_result = (xdrproc_t) xdr_double;
+		local = (char *(*)(char *, struct svc_req *)) tiempo_1_svc;
 		break;
 
 	default:

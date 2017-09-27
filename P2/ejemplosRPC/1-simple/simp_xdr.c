@@ -4,7 +4,6 @@
  */
 
 #include "simp.h"
-#define foo 127
 
 bool_t
 xdr_operands (XDR *xdrs, operands *objp)
