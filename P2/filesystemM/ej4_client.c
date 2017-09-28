@@ -8,7 +8,7 @@
 
 
 void
-filesystem_prg_1(char *host, char * nombreArchivo)
+filesystem_prg_1(char *host, char * nombreArchivo, int cantidadB)
 {
 	CLIENT *clnt;
 	struct retornoValores  *result_1; //Lectura
@@ -27,7 +27,7 @@ filesystem_prg_1(char *host, char * nombreArchivo)
 	}
 #endif	/* DEBUG */
 	lectura_1_arg.filename = nombreArchivo;
-	lectura_1_arg.cant = 240;
+	lectura_1_arg.cant = cantidadB;
 	lectura_1_arg.pos = 0;
 	result_1 = lectura_1(&lectura_1_arg, clnt);
 	while((result_1->bytes_leidos) != 0){
@@ -35,7 +35,7 @@ filesystem_prg_1(char *host, char * nombreArchivo)
 			//int indice = 0;
 			//while((result_1->bytes_leidos)!= indice){
 			fwrite(result_1->ret_bytes,sizeof(unsigned char),result_1->bytes_leidos,archivo_local);
-			lectura_1_arg.pos = lectura_1_arg.pos + 240 ;
+			lectura_1_arg.pos = lectura_1_arg.pos + cantidadB ;
 			result_1 = lectura_1(&lectura_1_arg, clnt);
 	}
 
@@ -68,6 +68,6 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	filesystem_prg_1 (host,argv[2]);
+	filesystem_prg_1 (host,argv[2],atoi(argv[3]));
 exit (0);
 }
