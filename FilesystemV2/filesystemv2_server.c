@@ -10,9 +10,9 @@ char **
 lectura_1_svc(variablesLectura *argp, struct svc_req *rqstp)
 {
 	static char * result;
-
+	char * aux;
 	FILE *archivo;
-	archivo = fopen(argp->nombreA,"r");
+	archivo = fopen(argp->nombreA,"rb");
 	// Con respecto al buffer, fijarse en el tamaño,se tiene que armar alguna estructura para que el argp->cantLeerA sea igual al tamaño del 	char *buffer....y ver la parte de trasmitir por partes para archivo grandes.
 	printf("Nombre del archivo a leer: %s\n",argp->nombreA );	
 	if(archivo == NULL){
@@ -22,20 +22,23 @@ lectura_1_svc(variablesLectura *argp, struct svc_req *rqstp)
 		printf("El archivo se abrio correctamente\n");	
 		//posicionamiento del puntero
 		fseek(archivo,argp->posicionA, SEEK_SET); // ARCHIVO, POSICION, FORMATO DE SET
-		printf("Posicion del Archivo: %d\n",argp->posicionA );
+		printf("Posicion buscada en el archivo: %d\n",argp->posicionA );
 		
 		//lectura del archivo
-		result = (char *)calloc(argp->cantLeerA, sizeof(unsigned char));
-		fread(result,sizeof(unsigned char),argp->cantLeerA,archivo);
-		printf("%s \n",result);
+		aux = (char *)calloc(argp->cantLeerA, sizeof(unsigned char));
+		fread(aux,sizeof(unsigned char),argp->cantLeerA,archivo);
+		//printf("%s \n",aux);
+		result = aux;
+	//printf("%s \n",result);
 		
 		int resultado_posicion = ftell(archivo);
 		
 		resultado_posicion = resultado_posicion - argp->posicionA;
-		printf("Cantidad de Bytes leidos: %d\n",resultado_posicion);
-				
+		printf("Strlen(result) = %d\n", strlen(result));
+		printf("Posicion final = %d\n", resultado_posicion);
 		fclose(archivo);
 		printf("*******************************************************************\n");
+		free(aux);
 
 	}
 
@@ -69,11 +72,9 @@ escritura_1_svc(variablesEscritura *argp, struct svc_req *rqstp)
 		printf("Lo que se copio al final del archivo:'%s'\n",argp->bufferEscritura);
 		int pos_final = ftell(archivo);
 		result = pos_final - pos_inicial;
-
 		fclose(archivo);
 		fclose(archivo_remoto);
 		printf("*******************************************************************\n");
 	}
-	printf ("pos_final - pos_inicial = %d\n", result);
 	return &result;
 }
