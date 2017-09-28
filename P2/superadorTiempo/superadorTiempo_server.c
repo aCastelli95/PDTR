@@ -10,15 +10,12 @@
 #include <unistd.h>
 #include <time.h>
 
-double tiempoEspera =0;
-
 double *
-tiempo_1_svc(void *argp, struct svc_req *rqstp)
+tiempo_1_svc(variablesTiempo *argp, struct svc_req *rqstp)
 {
 	static double  result;
-	tiempoEspera = tiempoEspera + 2;
-	printf("El tiempo de espera en servidor: %f\n",tiempoEspera);
-	sleep(tiempoEspera);
-	result=tiempoEspera;
+	printf("El tiempo de espera en servidor: %d\n",argp->tiempo);
+	sleep(argp->tiempo);
+	result=1;
 	return &result;
 }

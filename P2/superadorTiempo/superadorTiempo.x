@@ -8,10 +8,12 @@
 Contiene la estructura de lo que se envia en el momento
 de conexion
 */
-
+struct variablesTiempo{
+  int tiempo;
+};
 program SERVIDORCF_PROG {
   version SIMP_VERSION {
-    double TIEMPO() = 1;
+    double TIEMPO(variablesTiempo) = 1;
   } = VERSION_NUMBER;
 
 } = 0x30000001;

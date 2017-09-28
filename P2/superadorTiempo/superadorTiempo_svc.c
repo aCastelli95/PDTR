@@ -20,7 +20,7 @@ static void
 servidorcf_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		int fill;
+		variablesTiempo tiempo_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -32,7 +32,7 @@ servidorcf_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		return;
 
 	case TIEMPO:
-		_xdr_argument = (xdrproc_t) xdr_void;
+		_xdr_argument = (xdrproc_t) xdr_variablesTiempo;
 		_xdr_result = (xdrproc_t) xdr_double;
 		local = (char *(*)(char *, struct svc_req *)) tiempo_1_svc;
 		break;

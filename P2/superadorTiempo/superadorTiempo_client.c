@@ -10,19 +10,18 @@
 #include <unistd.h>
 #include <time.h>
 
+
 void
-servidorcf_prog_1(char *host)
+servidorcf_prog_1(char *host,int valorTiempo)
 {
 	CLIENT *clnt;
 	double  *result_1;
-	char *tiempo_1_arg;
-
-	clock_t t_ini;
+	variablesTiempo  tiempo_1_arg;
+	/*clock_t t_ini;
 	double seg;
-	//gettimeofday(&t_ini, NULL);
-	
 	t_ini = clock();
-#ifndef	DEBUG
+	*/
+	#ifndef	DEBUG
 	clnt = clnt_create (host, SERVIDORCF_PROG, SIMP_VERSION, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
@@ -30,13 +29,17 @@ servidorcf_prog_1(char *host)
 	}
 #endif	/* DEBUG */
 
-	result_1 = tiempo_1((void*)&tiempo_1_arg, clnt);
-	printf("Resultado servidfor:%f \n",*result_1);	
+	tiempo_1_arg.tiempo = valorTiempo;
+	/*printf("Resultado servidfor:%f \n",*result_1);	
 	seg = (double) t_ini/100000;
 	printf("Resultadop de inicio cliente: %f\n",seg);
 	printf("CLOCKS_PER_SEC = %ld\n",CLOCKS_PER_SEC);
+	
+	result_1 = tiempo_1((void*)&tiempo_1_arg, clnt);
 	seg = (*result_1 - seg); 
 	printf("Resultado final: %lf \n",seg);
+	*/
+	result_1 = tiempo_1((void*)&tiempo_1_arg, clnt);
 	if (result_1 == (double *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -50,12 +53,19 @@ int
 main (int argc, char *argv[])
 {
 	char *host;
+	CLIENT *clnt;
+	struct timeval espera;
 
-	if (argc < 2) {
+	clnt=clnt_create(host,DUPLICA,DUPLIVERS,"tcp");
+	espera.tv_sec=40;
+	espera.tv_usec=0;
+	
+	
+	if (argc < 3) {
 		printf ("usage: %s server_host\n", argv[0]);
 		exit (1);
 	}
 	host = argv[1];
-	servidorcf_prog_1 (host);
+	servidorcf_prog_1((host),atoi(argv[2]));
 exit (0);
 }
