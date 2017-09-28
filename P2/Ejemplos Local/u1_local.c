@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<pwd.h>
+char *error="ERROR";
+
+int l_byname(char *name ) {
+
+	static int  result;
+	struct passwd *pw;
+
+	/* argp is a pointer to: a string (a char *)! */
+	pw = getpwnam( name );
+	if (pw==NULL) {
+	  /* ERROR ! NO USER FOUND */
+	  result = -1;
+	} 
+	else {
+	  result = pw->pw_uid;
+	}
+	return(result);
+
+}
+
+char * l_bynum(int uid ){
+
+
+  static char * result;
+  struct passwd *pw;
+	pw = getpwuid( uid );
+	if (pw==NULL) {
+	  result=error;
+	} 
+	else {
+	  result = pw->pw_name;
+	}
+
+  return(result);	
+	
+}
+
+
+int main( int argc, char* argv[] ) {
+  
+  char *name;
+  int uid;
+
+  if(argc < 2) {
+    printf("usage: %s  name_or_uid\n", argv[0]);
+    exit(1);
+  }
+  name = argv[1];
+  if ((name[0]>='0')&&(name[0]<='9')) {
+    uid = atoi(name);
+    printf("UID %d, Name is %s\n",uid,l_bynum(uid));
+  } 
+  else {
+    printf("Name %s, UID is %d\n",name,l_byname(name));
+  }
+  return(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

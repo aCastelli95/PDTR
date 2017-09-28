@@ -14,7 +14,7 @@
 void
 servidorcf_prog_1(char *host,int valorTiempo)
 {
-	CLIENT *clnt;
+	CLIENT *clnt
 	double  *result_1;
 	variablesTiempo  tiempo_1_arg;
 	/*clock_t t_ini;
@@ -30,13 +30,13 @@ servidorcf_prog_1(char *host,int valorTiempo)
 #endif	/* DEBUG */
 
 	tiempo_1_arg.tiempo = valorTiempo;
-	/*printf("Resultado servidfor:%f \n",*result_1);	
+	/*printf("Resultado servidfor:%f \n",*result_1);
 	seg = (double) t_ini/100000;
 	printf("Resultadop de inicio cliente: %f\n",seg);
 	printf("CLOCKS_PER_SEC = %ld\n",CLOCKS_PER_SEC);
-	
+
 	result_1 = tiempo_1((void*)&tiempo_1_arg, clnt);
-	seg = (*result_1 - seg); 
+	seg = (*result_1 - seg);
 	printf("Resultado final: %lf \n",seg);
 	*/
 	result_1 = tiempo_1((void*)&tiempo_1_arg, clnt);
@@ -53,14 +53,8 @@ int
 main (int argc, char *argv[])
 {
 	char *host;
-	CLIENT *clnt;
-	struct timeval espera;
 
-	clnt=clnt_create(host,DUPLICA,DUPLIVERS,"tcp");
-	espera.tv_sec=40;
-	espera.tv_usec=0;
-	
-	
+
 	if (argc < 3) {
 		printf ("usage: %s server_host\n", argv[0]);
 		exit (1);

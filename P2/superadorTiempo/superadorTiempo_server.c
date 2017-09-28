@@ -13,7 +13,7 @@
 double *
 tiempo_1_svc(variablesTiempo *argp, struct svc_req *rqstp)
 {
-	static double  result;
+	static double result;
 	printf("El tiempo de espera en servidor: %d\n",argp->tiempo);
 	sleep(argp->tiempo);
 	result=1;
