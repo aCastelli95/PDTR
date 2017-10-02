@@ -16,11 +16,12 @@ double *
 tiempo_1_svc(variablesTiempo *argp, struct svc_req *rqstp)
 {
 	//inicio de variables
-	double var;
-	static double result;
-	clock_t t_ini_servidor;
-	t_ini_servidor = clock();
 	
+	static double result;
+	/*clock_t t_ini_servidor;
+	t_ini_servidor = clock();
+	double var;
+
 	//armado de tiempo extra para la siguiente vez que se use elñ servidor
 	tiempoExtra = argp->tiempo + tiempoExtra;
 	printf("El tiempo de espera en servidor: %f\n",tiempoExtra);
@@ -34,6 +35,9 @@ tiempo_1_svc(variablesTiempo *argp, struct svc_req *rqstp)
 	result = tiempoExtra - var;
 	printf("El resultado del servidor en segundos: %f \n",result);
 	printf("-----------------------------------\n");
-
+	*/
+	sleep(0.9);
+	
+	result = 0.9;
 	return &result;
 }

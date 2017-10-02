@@ -39,13 +39,14 @@ servidorcf_prog_1(char *host,int valorTiempo)
 	printf("Resultado servidor:%f\n",*result_1);
 	
 	// informacion util
-	seg = (*result_1) - seg;
+	seg = (*result_1) + seg;
+	//seg = ((double)clock()/1000000) - seg;
 	printf("Resultado final: %f\n",seg);
 	
 	if (result_1 == (double *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-
+ 
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
