@@ -1,4 +1,5 @@
 import java.io.*;
+
 public class Servidor
 extends java.rmi.server.UnicastRemoteObject 
 implements Interfaz
@@ -12,13 +13,44 @@ implements Interfaz
   public int lectura(String nombreA, int pos, int cant) throws java.rmi.RemoteException
 
   {
-    
-    //Aqui ponemos el codigo que queramos
-    System.out.println("Lectura de archivo Finalizada.");
-    
-    return 1;
+    File ficheroOrigenLectura = new File("prueba.txt");
+    BufferedInputStream lectorFicheroLectura;//Creo un objeto flujo buffer de lectura
+    //RandomAccessFile lectorFicheroLectura = new RandomAccessFile("prueba.txt","rw");
+    //lectorFicheroLectura.seek(pos);
+    int bytes = -1;
 
+    try{
+
+        lectorFicheroLectura=new BufferedInputStream(new FileInputStream(ficheroOrigenLectura));
+        bytes=lectorFicheroLectura.read(); //mientras no llegue a fin de fichero...            
+        System.out.println();//se imprime el byte a copiar convertido a caracter por consola(no tiene sentido) 
+        System.out.println(bytes);
+        lectorFicheroLectura.close();//cerramos el lector    
+        if(bytes == -1){
+            lectorFicheroLectura.close();//cerramos el lector    
+            System.out.println("Lectura de archivo Finalizada.");
+
+        }
+
+    }catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+    }
+    catch (IOException ex) {
+            System.out.println(ex.getMessage());
+    }/*finally {
+            try {
+                if (lectorFicheroLectura != null) {
+                    lectorFicheroLectura.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+*/
+    //Aqui ponemos el codigo que queramos
+    return bytes;
   }
+
 
   public int escritura(String nombreAescritura, String buffer, int cant) throws java.rmi.RemoteException
 
