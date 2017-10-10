@@ -16,7 +16,7 @@ implements Interfaz
     File ficheroOrigenLectura = new File("prueba.txt");
     BufferedInputStream lectorFicheroLectura;//Creo un objeto flujo buffer de lectura
     //RandomAccessFile lectorFicheroLectura = new RandomAccessFile("prueba.txt","rw");
-    //lectorFicheroLectura.seek(pos);
+    //lectorFicheroLectura.seek(pos); //No usar seek, para moverse en el archivo se usa skip
     int bytes = -1;
 
     try{
