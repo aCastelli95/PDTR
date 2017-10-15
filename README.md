@@ -21,4 +21,6 @@ Finalmente ejecutamos cliente/servidor en terminales diferentes
                     java -Djava.rmi.server.hostname=127.0.0.1 <nombreServidor> 1234 // ejecución del servidor
                     java MiClienteRMI 127.0.0.1 1234 // ejecucion del cliente
    
-                  
+A considerar, para cambiar los tiempos de respuesta en el cliente/servidor, ejecutamos lo siguiente:
+                    
+                     java -Dsun.rmi.transport.tcp.connectionTimeout=5000 -Dsun.rmi.transport.tcp.responseTimeout=5000        Cliente_tiempos 127.0.0.1 1234 // se desconecta en 5 segundos, todo esto en el cliente.
