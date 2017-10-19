@@ -1,39 +1,45 @@
 import java.io.*;
-public class Cliente
-{
-  public static void main(String[] args)
-  {
-    int byte_integer=0;
-    char byte_char;
-    int fin;
+import java.rmi.*;
+import java.rmi.registry.Registry; /* REGISTRY_PORT */
 
-    //inicio de archivos en clientes.
-  /*  File ficheroDestinoCliente = new File("pruebaCliente.txt");
+public class Cliente {
+
+  public static void main(String[] args){
+
+    if (args.length != 2){
+			System.out.println("2 arguments needed: (remote) hostname filename (sin comillas)");
+			System.exit(1);
+		}//inicio de archivos en clientes.
+    File ficheroDestinoCliente = new File("Copia local");
     BufferedOutputStream escritorFicheroCliente;
-    */
+    retornoLectura rl = new retornoLectura();
+    String nombreArchivo = args[1];
+    int pos = 0;
+    //Creamos objeto de tipo fichero con la ruta destino.
     try
     {
-      Interfaz mir = (Interfaz)java.rmi.Naming.lookup("//" + 
-                              args[0] + ":" + args[1] + "/PruebaRMI");
-      for (int i=1;i<=mir.escritura("a","asdasd",1);i++) mir.lectura("<",1,1);
-      //Parte de estructura de archivos
-
-      /*escritorFicheroCliente = new BufferedOutputStream(new FileOutputStream(ficheroDestinoCliente));
-      int pos = 0;
-      byte_integer = mir.lectura("asd",pos,1);
-      byte_char = (char)byte_integer;
-      while(byte_integer != -1){
-          System.out.println(byte_char);
-          escritorFicheroCliente.write(byte_integer);
-          byte_integer = mir.lectura("asd",pos++,1);
-          byte_char = (char)byte_integer;          
+      String rname = "//" + args[0] + ":" + Registry.REGISTRY_PORT + "/remote";
+      Interfaz mir = (Interfaz)java.rmi.Naming.lookup(rname);
+      escritorFicheroCliente=new BufferedOutputStream(new FileOutputStream(ficheroDestinoCliente));//Inicializa el buffer de escritura con un objeto de tipo FileOutputStream( flujo de salida a fichero).
+      int cantEsc=0, i=0;
+      rl = mir.lectura(nombreArchivo, 255, pos);
+      while (rl.getCantBytesLeidos() != -1){
+        System.out.println("Realizando escritura...");
+        cantEsc=mir.escritura("Copia Remota", rl.getRetBytes(), rl.getCantBytesLeidos());
+        escritorFicheroCliente.write(rl.getRetBytes(),0,rl.getCantBytesLeidos());//se copia el flujo de byes al fichero destino.
+        pos += 255;
+        rl = mir.lectura(nombreArchivo, 255, pos);
       }
-      // EScritura
-      fin = mir.escritura("a","asdasd",1);
-*/
-    } catch (Exception e)
-      {
+      escritorFicheroCliente.close();
+    } catch (FileNotFoundException fe) {
+            System.out.println(fe.getMessage());
+    } catch (RemoteException re){
+        re.printStackTrace();
+    } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+    } catch (Exception e){
+        System.out.println("Error desconocido");
         e.printStackTrace();
-      }
- }
+    }
+  }
 }
