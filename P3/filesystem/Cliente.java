@@ -10,7 +10,16 @@ public class Cliente {
 			System.out.println("2 arguments needed: (remote) hostname filename (sin comillas)");
 			System.exit(1);
 		}//inicio de archivos en clientes.
-    File ficheroDestinoCliente = new File("Copia local");
+    int number = 1;
+    String nombreLocal = "Copia local_" + number+(args[1].substring(args[1].lastIndexOf(".")));
+    String nombreRemoto = "Copia remota_" + number+(args[1].substring(args[1].lastIndexOf(".")));
+    File ficheroDestinoCliente = new File(nombreLocal);
+    while (ficheroDestinoCliente.exists() == true){ //Chequea que no exista un archivo con el mismo nombre. Si existe, incrementa el numero hasta que no haya uno igual. 
+      number++;
+      nombreLocal = "Copia local_" + number +(args[1].substring(args[1].lastIndexOf(".")));
+      nombreRemoto = "Copia remota_" + number+(args[1].substring(args[1].lastIndexOf(".")));
+      ficheroDestinoCliente = new File(nombreLocal);
+    }
     BufferedOutputStream escritorFicheroCliente;
     retornoLectura rl = new retornoLectura();
     String nombreArchivo = args[1];
@@ -25,7 +34,7 @@ public class Cliente {
       rl = mir.lectura(nombreArchivo, 255, pos);
       while (rl.getCantBytesLeidos() != -1){
         System.out.println("Realizando escritura...");
-        cantEsc=mir.escritura("Copia Remota", rl.getRetBytes(), rl.getCantBytesLeidos());
+        cantEsc=mir.escritura(nombreRemoto, rl.getRetBytes(), rl.getCantBytesLeidos());
         escritorFicheroCliente.write(rl.getRetBytes(),0,rl.getCantBytesLeidos());//se copia el flujo de byes al fichero destino.
         pos += 255;
         rl = mir.lectura(nombreArchivo, 255, pos);
