@@ -1,5 +1,6 @@
 import java.io.*;
 
+
 public class Cliente_tiempos
 {
   public static void main(String[] args)
@@ -12,22 +13,20 @@ public class Cliente_tiempos
     System.out.println("Inicio = "+ (inicio_tiempo));
     try
     {
-      Interfaz_tiempos mir = (Interfaz_tiempos)java.rmi.Naming.lookup("//" + 
+       Interfaz_tiempos mir = (Interfaz_tiempos)java.rmi.Naming.lookup("//" + 
                               args[0] + ":" + args[1] + "/PruebaRMI");
        
     //System.out.println(mir.get_mensaje());	
-    total = mir.prueba_tiempos(); // realiza una llamada al servidor.
+    mir.prueba_tiempos(); // realiza una llamada al servidor.
     fin_tiempo = System.currentTimeMillis()/1000.0;
     //resultado = fin_tiempo - inicio_tiempo;
     System.out.println("Finalizacion = " + fin_tiempo);
     System.out.println("Tiempo final de ejecucion =" +(fin_tiempo - inicio_tiempo) );
-    if(total == 1 ){
-        System.out.println("Timeout()");
-      }
+    
     }
 	catch (Exception e)
       {
-    e.getStackTrace();
+    e.printStackTrace();
        }
  
  }
