@@ -6,18 +6,18 @@ public class Cliente {
 
   public static void main(String[] args){
 
-    if (args.length != 3){
-			System.out.println("2 arguments needed: (remote) hostname filename (sin comillas) numero entero");
+    if (args.length != 2){
+			System.out.println("2 arguments needed: (remote) hostname filename (sin comillas)");
 			System.exit(1);
 		}//inicio de archivos en clientes.
-    int number = Integer.parseInt(args[2]);
-    String nombreLocal = "Copia local_" + number;
-    String nombreRemoto = "Copia remota_" + number;
+    int number = 1;
+    String nombreLocal = "Copia local_" + number+(args[1].substring(args[1].lastIndexOf(".")));
+    String nombreRemoto = "Copia remota_" + number+(args[1].substring(args[1].lastIndexOf(".")));
     File ficheroDestinoCliente = new File(nombreLocal);
-    while (ficheroDestinoCliente.exists() == true){
+    while (ficheroDestinoCliente.exists() == true){ //Chequea que no exista un archivo con el mismo nombre. Si existe, incrementa el numero hasta que no haya uno igual. 
       number++;
-      nombreLocal = "Copia local_" + number;
-      nombreRemoto = "Copia remota_" + number;
+      nombreLocal = "Copia local_" + number +(args[1].substring(args[1].lastIndexOf(".")));
+      nombreRemoto = "Copia remota_" + number+(args[1].substring(args[1].lastIndexOf(".")));
       ficheroDestinoCliente = new File(nombreLocal);
     }
     BufferedOutputStream escritorFicheroCliente;
