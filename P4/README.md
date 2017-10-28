@@ -9,6 +9,6 @@
           
           javac -classpath lib/jade.jar -d classes <Dirección_Completa>/AgenteMovil.java -> Ejemplo de compilacion por la catedra
           
-   Para compilar un agente y abrir interfaz, colocamos:
+   Para ejecutar un agente y abrir interfaz, colocamos:
             
           java -cp lib/jade.jar:classes jade.Boot -gui -agents nombre_del_agente:Clase_del_agente_
