@@ -1,4 +1,4 @@
-#Práctica 4
+# Práctica 4
   Para ejecutar JADE-all-4.3.2, descomprimimos todas las carpetas y por una terminal, nos ubicamos en "jade". Desde ahí,
   comenzamos.
 
