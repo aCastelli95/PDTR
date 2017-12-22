@@ -15,17 +15,17 @@ public class fileClient {
         parametrosEscritura pe = new parametrosEscritura();
         String hostName = args[0];
         int portNumber = Integer.parseInt(args[1]);
-        pl.setFilename(args[2]);
+        pl.setFilename(args[2]);    //Guardo en los parametros de lectura el archivo a abrir
 
         int number = 1;
         String nombreLocal = "Copia local_" + number+(pl.getFilename().substring(pl.getFilename().lastIndexOf(".")));
         String nombreRemoto = "Copia remota_" + number+(pl.getFilename().substring(pl.getFilename().lastIndexOf(".")));
-        File ficheroDestinoCliente = new File(nombreLocal);
+        File ficheroDestinoCliente = new File(nombreLocal); 
 
         while (ficheroDestinoCliente.exists() == true){ //Chequea que no exista un archivo con el mismo nombre. Si existe, incrementa el numero hasta que no haya uno igual. 
             number++;
-            nombreLocal = "Copia local_" + number +(pl.getFilename().substring(pl.getFilename().lastIndexOf(".")));
-            nombreRemoto = "Copia remota_" + number+(pl.getFilename().substring(pl.getFilename().lastIndexOf(".")));
+            nombreLocal = "Copia local_" + number + (pl.getFilename().substring(pl.getFilename().lastIndexOf(".")));
+            nombreRemoto = "Copia remota_" + number + (pl.getFilename().substring(pl.getFilename().lastIndexOf(".")));
             ficheroDestinoCliente = new File(nombreLocal);
         }
 
@@ -61,6 +61,9 @@ public class fileClient {
                 oos.writeObject(pe);
                 oos.reset();
                 
+                int cantEscrito=(Integer)ois.readObject();
+                System.out.println("Cantidad de bytes escritos en el archivo remoto: " + cantEscrito);
+
                 escritorFicheroCliente.write(rl.getRetBytes(),0,rl.getCantBytesLeidos());//se copia el flujo de byes al fichero destino.
 
                 oos.writeObject("Lectura");
